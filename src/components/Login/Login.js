@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
+import { useEffect } from 'react/cjs/react.production.min';
 
 const Login = (props) => {
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -11,12 +12,22 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  useEffect(() => { //normalmente lo usamos para sideEffects, como usuarios haciendo cambios (ingresando data en un input) o un http request
+    const timeId = setTimeout(() => {
+      console.log('Checking form validity!')
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    }, 500);
+
+    return () => {
+      console.log('Cleaning up')
+      clearTimeout(timeId);
+    }  
+  }, [enteredEmail, enteredPassword]) //si cambia alguna de las dos dependencias (OR operator)
+
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
-
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
   };
 
   const passwordChangeHandler = (event) => {
