@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import MainHeader from "./components/MainHeader/MainHeader";
-import { useEffect } from "react/cjs/react.production.min";
+/* import { useEffect } from "react/cjs/react.production.min"; */
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,7 +15,7 @@ function App() {
       setIsLoggedIn(true);
     }
   }, []); // esta es la dependencia que cada vez que se detecte una modificacion, la funcion de arriba se ejecutara
-  
+
   const loginHandler = (email, password) => {
     // We should of course check email and password
     // But it's just a dummy/ demo anyways
